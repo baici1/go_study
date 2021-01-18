@@ -4,7 +4,7 @@
 
 ### 错误点
 
-![image-20210118232238407](C:\Users\yang\AppData\Roaming\Typora\typora-user-images\image-20210118232238407.png)
+![image-20210118232238407](./img/1.png)
 
 他总是报这样的错误.我一直没有懂这个错误.翻译是:==无效的内存地址或无指针取消引用== 然后百度发现
 
@@ -22,11 +22,11 @@
 
 真正出错的是这一段代码(后面一个是正确的)
 
-![image-20210118232839835](C:\Users\yang\AppData\Roaming\Typora\typora-user-images\image-20210118232839835.png)
+![image-20210118232839835](./img/3.png)
 
 正确的代码:
 
-![image-20210118232820230](C:\Users\yang\AppData\Roaming\Typora\typora-user-images\image-20210118232820230.png)
+![image-20210118232820230](./img/2.png)
 
 发现仅仅是`=`和`:=`的一个小小区别
 
