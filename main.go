@@ -15,5 +15,5 @@ func main() {
 	fmt.Println("success")	
 	}
 	 router.InitRoute()//初始化路由
-	
+	 
 }
