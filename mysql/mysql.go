@@ -3,17 +3,14 @@ package mysql_api
 import (
 	"fmt"
 
+	"example.com/m/v2/dao"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 )
 
 var db *sqlx.DB
 
-type User struct {
-	Id int64 
-	Name string
-	Password string
-}
+
 
 
 //连接数据库
@@ -30,15 +27,15 @@ func InitDB() (err error) {
 }
 
 //查询数据库
-func 	QueryRowDemo(name string) (user User,err error) {
+func 	QueryRowDemo(name string) (user dao.User,err error) {
 	sqlstr:="select id,name,password from user where name=?"
-	var u User
+	var u dao.User
 	err=db.Get(&u,sqlstr,name)
 	if err != nil {
 		fmt.Printf("get failed, err:%v\n", err)
 		return u,err
 	}
-	fmt.Println(u)
+	//fmt.Println(u)
 	return u,nil
 }
 //增加数据库

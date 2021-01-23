@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	mysql_api "example.com/m/v2/mysql"
+	jwt "example.com/m/v2/tool"
 	"github.com/gin-gonic/gin"
 )
 
@@ -17,11 +18,17 @@ func Login(c *gin.Context) {
 		})
 		return
 	}
+	token,_:=jwt.GenToken(u.Id,u.Name,u.Password)
+	//fmt.Println(token)
 		c.JSON(http.StatusOK, gin.H{
 		"message":"OK",
-		"name": u.Name,
-		"password":u.Password,
-		"id":u.Id,
+		"data":gin.H{
+			"name": u.Name,
+			"password":u.Password,
+			"id":u.Id,
+			"token":token,
+		},
+		
 		})
 	
 }
@@ -29,7 +36,7 @@ func Login(c *gin.Context) {
 func Register(c *gin.Context)  {
 	name := c.Query("name")
 	password := c.Query("password")
-	_,err:=mysql_api.QueryRowDemo(name)
+	u,err:=mysql_api.QueryRowDemo(name)
 	if err == nil {
 		c.JSON(500, gin.H{
 			"message":"用户已存在",
@@ -43,7 +50,17 @@ func Register(c *gin.Context)  {
 		})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{
+
+token,_:=jwt.GenToken(u.Id,u.Name,u.Password)
+	//fmt.Println(token)
+		c.JSON(http.StatusOK, gin.H{
 		"message":"OK",
-	})
+		"data":gin.H{
+			"name": u.Name,
+			"password":u.Password,
+			"id":u.Id,
+			"token":token,
+		},
+		
+		})
 }
