@@ -11,10 +11,13 @@ import (
 
 func Login(c *gin.Context) {
 	name := c.Query("name")
+	// fmt.Println(name)
 	u,err:=mysql_api.QueryRowDemo(name)
+	//fmt.Println(u)
 	if err != nil {
 		c.JSON(404, gin.H{
 			"message":"未找到此用户",
+			"code":"404",
 		})
 		return
 	}
@@ -28,7 +31,7 @@ func Login(c *gin.Context) {
 			"id":u.Id,
 			"token":token,
 		},
-		
+		"code":"200",
 		})
 	
 }
@@ -40,6 +43,7 @@ func Register(c *gin.Context)  {
 	if err == nil {
 		c.JSON(500, gin.H{
 			"message":"用户已存在",
+			"code":"500",
 		})
 		return
 	}
@@ -47,10 +51,11 @@ func Register(c *gin.Context)  {
 	if err != nil {
 		c.JSON(500,gin.H{
 			"message":"注册出错",
+			"code":"500",
 		})
 		return
 	}
-
+	u,err=mysql_api.QueryRowDemo(name)
 token,_:=jwt.GenToken(u.Id,u.Name,u.Password)
 	//fmt.Println(token)
 		c.JSON(http.StatusOK, gin.H{
@@ -61,6 +66,6 @@ token,_:=jwt.GenToken(u.Id,u.Name,u.Password)
 			"id":u.Id,
 			"token":token,
 		},
-		
+		"code":"200",
 		})
 }
